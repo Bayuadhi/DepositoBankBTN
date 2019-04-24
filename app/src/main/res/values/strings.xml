@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Deposito Bank BTN</string>
+
+    <string-array name="currency_array">
+        <item> </item>
+        <item>1 bulan</item>
+        <item>2 bulan</item>
+        <item>3 bulan</item>
+        <item>6 bulan</item>
+        <item>12 bulan</item>
+        <item>24 bulan</item>
+    </string-array>
+
+</resources>
