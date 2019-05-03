@@ -33,12 +33,12 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="294dp"
-        android:layout_height="52dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="2dp"
-        android:layout_marginBottom="197dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginBottom="208dp"
         android:text="Jangka Waktu:"
         android:textSize="24sp" />
 
@@ -81,7 +81,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="0dp"
-        android:layout_marginBottom="93dp"
+        android:layout_marginBottom="47dp"
         android:paddingHorizontal="5dp"
         android:text="Hasil" />
 

@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.NumberFormat;
 import java.util.Locale;
@@ -20,9 +21,7 @@ public class MainActivity extends AppCompatActivity {
 
     EditText currency_input ;
     Button hasil;
-    private double answer;
-
-    Double input;
+    Spinner spinner_convert_from;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         // Default value
         currency_input.setText("0");
 
-        Spinner spinner_convert_from = (Spinner) findViewById(R.id.spinner_convert_from);
+        spinner_convert_from = (Spinner) findViewById(R.id.spinner_convert_from);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.currency_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_convert_from.setAdapter(adapter);
@@ -47,70 +46,65 @@ public class MainActivity extends AppCompatActivity {
                 showHasil();
             }
         });
-        // Add item selected listener
-        spinner_convert_from.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View v, int pos,
-                                       long id) {
 
-                // Get input text
-                input = Double.parseDouble(currency_input.getText().toString());
-                double hasil;
-                if (pos == 0) {
-                    answer = input*0;
-                } else if (pos == 1) {
-                    answer = input* 0.05 * 0.002739726 * 30 * 0.8;
-                } else if (pos == 2) {
-                    if (input <= 100000000) {
-                        answer = (input* 0.05 * 0.002739726 * 60 * 0.8);;
-                    }
-                    else {
-                        answer = input * 0.0525 * 0.002739726 * 60 * 0.8;;
-                    }
-                } else if (pos == 3) {
-                    if (input <= 100000000) {
-                        answer = input * 0.05 * 0.002739726 * 90 * 0.8;;
-                    }
-                    else {
-                        answer = input * 0.0525 * 0.002739726 * 90 * 0.8;;
-                    }
-                } else if (pos == 4) {
-                    if (input <= 100000000) {
-                        answer = input * 0.0525 * 0.002739726 * 180 * 0.8;;
-                    }
-                    else {
-                        answer = (input * 0.055 * 0.002739726 * 180 * 0.8);;
-                    }
-                } else if (pos == 5) {
-                    if (input <= 100000000) {
-                        answer = (input * 0.0525 * 0.002739726 * 360 * 0.8);;
-                    }
-                    else {
-                        answer = (input * 0.055 * 0.002739726 * 360 * 0.8);;
-                    }
-                } else if (pos == 6) {
-                    if (input <= 100000000) {
-                        answer = input * 0.0525 * 0.002739726 * 720 * 0.8;;
-                    }
-                    else {
-                        answer = (input * 0.055 * 0.002739726 * 720 * 0.8);
-                    }
-                }
-//                jawaban.setText(formatRupiah.format((double)answer));
+
+    }
+    
+    private double hitungDeposito(double input){
+        int pos = spinner_convert_from.getSelectedItemPosition();
+        if (pos == 0) {
+            return input*0;
+        } else if (pos == 1) {
+            return input* 0.05 * 0.002739726 * 30 * 0.8;
+        } else if (pos == 2) {
+            if (input <= 100000000) {
+                return (input* 0.05 * 0.002739726 * 60 * 0.8);
             }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
+            else {
+                return input * 0.0525 * 0.002739726 * 60 * 0.8;
             }
-        });
-
+        } else if (pos == 3) {
+            if (input <= 100000000) {
+                return input * 0.05 * 0.002739726 * 90 * 0.8;
+            }
+            else {
+                return input * 0.0525 * 0.002739726 * 90 * 0.8;
+            }
+        } else if (pos == 4) {
+            if (input <= 100000000) {
+                return input * 0.0525 * 0.002739726 * 180 * 0.8;
+            }
+            else {
+                return (input * 0.055 * 0.002739726 * 180 * 0.8);
+            }
+        } else if (pos == 5) {
+            if (input <= 100000000) {
+                return (input * 0.0525 * 0.002739726 * 360 * 0.8);
+            }
+            else {
+                return (input * 0.055 * 0.002739726 * 360 * 0.8);
+            }
+        } else if (pos == 6) {
+            if (input <= 100000000) {
+                return input * 0.0525 * 0.002739726 * 720 * 0.8;
+            }
+            else {
+                return (input * 0.055 * 0.002739726 * 720 * 0.8);
+            }
+        }
+        return 0;
     }
 
     private void showHasil(){
-        Intent intent = new Intent(this,Hasil.class);
-        intent.putExtra(TAG_HASIL,answer);
-        startActivity(intent);
+        double input = Double.parseDouble(currency_input.getText().toString());
+        if (input<1000000000) {
+            double hasil = hitungDeposito(input);
+            Intent intent = new Intent(this, Hasil.class);
+            intent.putExtra(TAG_HASIL, hasil);
+            startActivity(intent);
+        }else{
+            Toast.makeText(this, "Input Tidak Boleh Lebih Dari 1M", Toast.LENGTH_SHORT).show();
+        }
     }
 }
 
